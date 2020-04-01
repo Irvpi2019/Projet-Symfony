@@ -1,2 +1,2 @@
 # Projet-Symfony
-Projet Symfony API. Voyage. Japon.
+Projet fait avec Symfony. API Voyage. Japon.
