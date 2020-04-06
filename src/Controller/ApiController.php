@@ -31,4 +31,14 @@ class ApiController extends AbstractController
         $response = new JsonResponse();
         return $response::fromJsonString($data->getContent());
     }
+
+       /**
+     * @Route("/test", name="test")
+     */ 
+    public function test()
+    {
+        return $this->render('api/test.html.twig', [
+            'controller_name' => 'ApiController',
+        ]);
+    }
 }
