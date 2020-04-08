@@ -17,6 +17,13 @@ import App from './App.vue'
 
 new Vue({
     el: "#app",
+    data: {
+      name: 'Irina'
+    },
     template: "<App />",
     components: {App}
     })
+
+
+
+    
