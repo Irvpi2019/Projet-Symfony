@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'japan';
+    src: url('../font/JapestylePlain.ttf');
+}
+
+body, html{
+    padding: 0;
+    margin: 0;
+}
