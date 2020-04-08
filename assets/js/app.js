@@ -12,14 +12,13 @@ import '../css/app.css';
 // import $ from 'jquery';
 
 
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from "vue";
+import App from "./App.vue";
+import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 
 new Vue({
-    el: "#app",
-    template: "<App />",
-    components: {App}
-    
-    })
+  el: "#app",
+  template: "<App />",
+  components: { App }
+});
 
- 

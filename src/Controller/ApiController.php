@@ -27,7 +27,7 @@ class ApiController extends AbstractController
     {
         $client = HttpClient::create();
         $data = $client->request('GET', 'https://api.openweathermap.org/data/2.5/weather?q=mulhouse&appid=fe47afa19eb8b58d4222de3869788634');
-        dd($request);
+        //dd($request);
         $response = new JsonResponse();
         return $response::fromJsonString($data->getContent());
     }
