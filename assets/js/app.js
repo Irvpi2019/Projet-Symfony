@@ -11,11 +11,11 @@ import '../css/app.css';
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 // import $ from 'jquery';
 
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+
 import Vue from "vue";
 import App from "./App.vue";
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap-vue/dist/bootstrap-vue.css";
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 
 

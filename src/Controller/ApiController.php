@@ -50,6 +50,5 @@ class ApiController extends AbstractController
         return $this->render('api/test.html.twig', [
             'controller_name' => 'ApiController',
         ]);
-           
     }
 }
