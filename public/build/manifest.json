@@ -2,10 +2,8 @@
   "build/app.css": "http://localhost:8080/build/app.css",
   "build/app.js": "http://localhost:8080/build/app.js",
   "build/runtime.js": "http://localhost:8080/build/runtime.js",
+  "build/vendors~app.css": "http://localhost:8080/build/vendors~app.css",
   "build/vendors~app.js": "http://localhost:8080/build/vendors~app.js",
-  "build/images/japon.jpg": "http://localhost:8080/build/images/japon.5fdd75a5.jpg",
-  "build/images/japon2.jpg": "http://localhost:8080/build/images/japon2.c99ea267.jpg",
-  "build/fonts/electroharmonix.ttf": "http://localhost:8080/build/fonts/electroharmonix.fd2bf4b7.ttf",
   "build/fonts/JapestylePlain.ttf": "http://localhost:8080/build/fonts/JapestylePlain.c5a6b366.ttf",
-  "build/vendors~app.css": "http://localhost:8080/build/vendors~app.css"
+  "build/images/japon.jpg": "http://localhost:8080/build/images/japon.5fdd75a5.jpg"
 }

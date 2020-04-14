@@ -25,9 +25,11 @@ class ApiController extends AbstractController
      */
     public function getWeatherData(Request $request)
     {
-        $client = HttpClient::create();
-        $data = $client->request('GET', 'https://api.openweathermap.org/data/2.5/weather?q=mulhouse&appid=fe47afa19eb8b58d4222de3869788634');
         //dd($request);
+        $city = $request->request->get('city');
+        $client = HttpClient::create();
+        $data = $client->request('GET', 'https://api.openweathermap.org/data/2.5/weather?q='.$city.'&appid=fe47afa19eb8b58d4222de3869788634');
+        
         $response = new JsonResponse();
         //return $response;
         /*$test = [
@@ -40,6 +42,7 @@ class ApiController extends AbstractController
         $response = new JsonResponse($test);
         return $response;*/
         return $response::fromJsonString($data->getContent());
+
     }
     
     /**
