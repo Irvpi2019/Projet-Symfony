@@ -2,7 +2,7 @@
   <section>
     <div class="ok">
       <h1>Bienvenue sur le site météo Michiyukibun</h1>
-      <form class="form" action="">
+      <form class="form" v-on:submit.prevent="fetchMeteo">
         <h2 class="text-light bg-dark">Search city</h2>
         <label for="city">City</label>
         <select id="city" name="city">
@@ -11,10 +11,10 @@
           <option value="kyoto">kyoto</option>
           <option value="kobe">kobe</option>
         </select>
+        <input type="submit" value="Meteo">
       </form>
+      {{ weather.main }}
 
-      <button v-on:click="counter += 1">Add 1</button>
-      <p>The button above has been clicked {{ counter }} {{ name }}times.</p>
     </div>
 
   </section>
@@ -24,27 +24,31 @@
 export default {
   data() {
     return {
-      weather: [],
+      /*weather: [],*/
       weather: {
         main: "",
         description: "",
         icon: "",
-      },
-    counter:0,
-    name:"",
+      },   
     };
   },
   created() {
-    this.fetchMeteo();
+    /*this.fetchMeteo();*/
   },
 
   methods: {
     fetchMeteo() {
-      fetch("/apiData")
+      let form = document.querySelector('form');
+      let formData = new FormData(form);
+      fetch("/apiData",
+      {
+        body: formData,
+        method: "post"
+        })
         .then((res) => res.json())
         .then((data) => {
           console.log(
-            data.weather.main +
+            data.weather[0].main +
               "\n" +
               data.weather.description +
               "\n" +
@@ -56,6 +60,8 @@ export default {
               "\n" +
               data.name
           );
+          this.weather.main = data.weather[0].main;
+          console.log(data)
           
         })
         .catch((error) => {
