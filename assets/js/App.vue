@@ -1,22 +1,24 @@
 <template>
   <section>
     <div class="ok">
-      <h1>Bienvenue sur le site météo Michiyukibun</h1>
+      <h1>Search the weather in Japan Citys</h1>
       <form class="form" v-on:submit.prevent="fetchMeteo">
-        <h2 class="text-light bg-dark">Search city</h2>
-        <label for="city">City</label>
-        <select id="city" name="city">
-          <option value="tokyo">tokyo</option>
-          <option value="osaka">osaka</option>
-          <option value="kyoto">kyoto</option>
-          <option value="kobe">kobe</option>
-        </select>
-        <input type="submit" value="Meteo">
+        <div class="d-flex justify-content-around align-middle">
+          <select id="city" name="city" class="form-control form-control-lg">
+            <option value="tokyo">tokyo</option>
+            <option value="osaka">osaka</option>
+            <option value="kyoto">kyoto</option>
+            <option value="kobe">kobe</option>
+          </select>
+          <button type="submit" value="Meteo" class="btn btn-secondary bg-info">Meteo</button>
+        </div>
       </form>
-      {{ weather.main }}
-
+      <div class="meteo">
+        <p>{{ weather.main }} {{  weather.icon  }}</p>
+        
+      </div>
+      
     </div>
-
   </section>
 </template>
 
@@ -28,8 +30,8 @@ export default {
       weather: {
         main: "",
         description: "",
-        icon: "",
-      },   
+        icon: ""
+      }
     };
   },
   created() {
@@ -38,15 +40,14 @@ export default {
 
   methods: {
     fetchMeteo() {
-      let form = document.querySelector('form');
+      let form = document.querySelector("form");
       let formData = new FormData(form);
-      fetch("/apiData",
-      {
+      fetch("/apiData", {
         body: formData,
         method: "post"
-        })
-        .then((res) => res.json())
-        .then((data) => {
+      })
+        .then(res => res.json())
+        .then(data => {
           console.log(
             data.weather[0].main +
               "\n" +
@@ -61,14 +62,16 @@ export default {
               data.name
           );
           this.weather.main = data.weather[0].main;
-          console.log(data)
-          
+          this.weather.icon = data.weather[0].icon;
+          let id = data.weather[0].icon;
+          let imgURL = "http://openweathermap.org/img/wn/" + id + ".png"
+          console.log (id);
         })
-        .catch((error) => {
+        .catch(error => {
           alert("error: " + error);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -82,13 +85,25 @@ section {
   background-image: url("../../assets/img/japon.jpg");
 }
 
+.meteo{
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  height: 10%;
+  background-color: blanchedalmond;
+  border-radius:3px ;
+}
+
 .form {
-  text-align: center;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: #181818;
+  width: 50%;
+  height: 10%;
 }
 form .h2 {
   font-size: 30px;
