@@ -1,23 +1,22 @@
 <template>
   <section>
     <div class="ok">
-      <h1>Search the weather in Japan Citys</h1>
+      <h1>Weather in the world</h1>
       <form class="form" v-on:submit.prevent="fetchMeteo">
         <div class="d-flex justify-content-around align-middle">
-          <select id="city" name="city" class="form-control form-control-lg">
-            <option value="tokyo">tokyo</option>
-            <option value="osaka">osaka</option>
-            <option value="kyoto">kyoto</option>
-            <option value="kobe">kobe</option>
-          </select>
-          <button type="submit" value="Meteo" class="btn btn-secondary bg-info">Meteo</button>
+          <input id="city" name="city" class="form-control form-control-lg" type="text" placeholder="Searche your city">
+          <button type="submit" value="Meteo" class="btn btn-secondary bg-info">
+            Meteo
+          </button>
         </div>
       </form>
       <div class="meteo">
-        <p>{{ weather.main }} {{  weather.icon  }}</p>
-        
+        <p>{{ weather.main }}   {{ name }} </p>
+        <p>{{ weather.icon }}</p>
+        <p>{{ main.temp }} ({{ weather.description }})</p>
+
+        <div class="header"></div>
       </div>
-      
     </div>
   </section>
 </template>
@@ -31,9 +30,13 @@ export default {
         main: "",
         description: "",
         icon: ""
-      }
+      },main:{
+        temp:"",
+      },name:""
+      
     };
   },
+
   created() {
     /*this.fetchMeteo();*/
   },
@@ -42,10 +45,12 @@ export default {
     fetchMeteo() {
       let form = document.querySelector("form");
       let formData = new FormData(form);
+
       fetch("/apiData", {
         body: formData,
         method: "post"
       })
+
         .then(res => res.json())
         .then(data => {
           console.log(
@@ -63,42 +68,51 @@ export default {
           );
           this.weather.main = data.weather[0].main;
           this.weather.icon = data.weather[0].icon;
+          this.weather.description = data.weather[0].description;
+          this.main.temp = data.main.temp
+          this.name = data.name
           let id = data.weather[0].icon;
-          let imgURL = "http://openweathermap.org/img/wn/" + id + ".png"
-          console.log (id);
+          console.log(data)
+          let imgURL = "http://openweathermap.org/img/wn/" + id + ".png";
+          console.log(imgURL);
+           var img = document.createElement("img");
+          img.src = imgURL;
+           var div = document.getElementById("header");
+          div.appendChild(img);
         })
-        .catch(error => {
-          alert("error: " + error);
-        });
     }
   }
+  
 };
 </script>
 
 <style scoped>
 section {
   height: 100vh;
-  width: 100%;
+  width: 100;
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
-  background-image: url("../../assets/img/japon.jpg");
+  background-size: cover;
+  background-image: url("../../assets/img/city.jpg");
 }
 
-.meteo{
+.meteo {
   position: absolute;
-  top: 70%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 40%;
   height: 10%;
-  background-color: blanchedalmond;
-  border-radius:3px ;
+  font-size: 30px;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  color: aliceblue;
 }
 
 .form {
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: #181818;
@@ -115,8 +129,8 @@ h1 {
   top: 15%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #181818;
+  color: #ff5e57;
   font-size: 60px;
-  font-family: "japan", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 </style>
