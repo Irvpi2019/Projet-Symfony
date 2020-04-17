@@ -4,9 +4,6 @@
   "build/runtime.js": "http://localhost:8080/build/runtime.js",
   "build/vendors~app.css": "http://localhost:8080/build/vendors~app.css",
   "build/vendors~app.js": "http://localhost:8080/build/vendors~app.js",
-  "build/fonts/JapestylePlain.ttf": "http://localhost:8080/build/fonts/JapestylePlain.c5a6b366.ttf",
-  "build/images/japon.jpg": "http://localhost:8080/build/images/japon.5fdd75a5.jpg",
-  "build/images/Sydney.jpg": "http://localhost:8080/build/images/Sydney.ff40ba1c.jpg",
-  "build/images/city.jpg": "http://localhost:8080/build/images/city.6f5aef0f.jpg",
-  "build/fonts/RobotoMono-Medium.ttf": "http://localhost:8080/build/fonts/RobotoMono-Medium.7cfbd428.ttf"
+  "build/fonts/RobotoMono-Medium.ttf": "http://localhost:8080/build/fonts/RobotoMono-Medium.7cfbd428.ttf",
+  "build/images/city.jpg": "http://localhost:8080/build/images/city.6f5aef0f.jpg"
 }

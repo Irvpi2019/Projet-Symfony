@@ -12,8 +12,8 @@
       </form>
       <div class="meteo">
         <p>{{ weather.main }}   {{ name }} </p>
-        <p>{{ weather.icon }}</p>
-        <p>{{ main.temp }} ({{ weather.description }})</p>
+        <p v-html="weather.icon"></p>
+        <p>{{ main.temp }} {{ weather.description }}</p>
 
         <div class="header"></div>
       </div>
@@ -53,36 +53,19 @@ export default {
 
         .then(res => res.json())
         .then(data => {
-          console.log(
-            data.weather[0].main +
-              "\n" +
-              data.weather.description +
-              "\n" +
-              data.weather.icon +
-              "\n" +
-              data.main.temp +
-              "\n" +
-              data.sys.country +
-              "\n" +
-              data.name
-          );
+
           this.weather.main = data.weather[0].main;
-          this.weather.icon = data.weather[0].icon;
-          this.weather.description = data.weather[0].description;
-          this.main.temp = data.main.temp
-          this.name = data.name
-          let id = data.weather[0].icon;
-          console.log(data)
-          let imgURL = "http://openweathermap.org/img/wn/" + id + ".png";
-          console.log(imgURL);
-           var img = document.createElement("img");
-          img.src = imgURL;
-           var div = document.getElementById("header");
-          div.appendChild(img);
+          this.main.temp = data.main.temp.toFixed(0) + 'C°';
+          this.weather.description = '('+ data.weather[0].description + ')';
+          this.name = data.name;
+
+          this.weather.icon = '<img src="http://openweathermap.org/img/wn/' + data.weather[0].icon + '.png" height="100px" width="100px">';
+
+          console.log()
         })
     }
+     
   }
-  
 };
 </script>
 
@@ -109,6 +92,7 @@ section {
   text-align: center;
   color: aliceblue;
 }
+
 
 .form {
   position: absolute;
