@@ -4,18 +4,25 @@
       <h1>Weather in the world</h1>
       <form class="form" v-on:submit.prevent="fetchMeteo">
         <div class="d-flex justify-content-around align-middle">
-          <input id="city" name="city" class="form-control form-control-lg" type="text" placeholder="Searche your city">
+          <input
+            id="city"
+            name="city"
+            class="form-control form-control-lg"
+            type="text"
+            placeholder="Searche your city"
+          />
           <button type="submit" value="Meteo" class="btn btn-secondary bg-info">
             Meteo
           </button>
         </div>
       </form>
       <div class="meteo">
-        <p>{{ weather.main }}   {{ name }} </p>
-        <p v-html="weather.icon"></p>
-        <p>{{ main.temp }} {{ weather.description }}</p>
-
-        <div class="header"></div>
+        <div class="text">
+          <p class="ppp">{{ weather.main }} {{ name }}</p>
+          <p v-html="weather.icon"></p>
+          <p>{{ main.temp }} {{ weather.description }}</p>
+        </div>
+        <div id="test"></div>
       </div>
     </div>
   </section>
@@ -29,11 +36,12 @@ export default {
       weather: {
         main: "",
         description: "",
-        icon: ""
-      },main:{
-        temp:"",
-      },name:""
-      
+        icon: "",
+      },
+      main: {
+        temp: "",
+      },
+      name: "",
     };
   },
 
@@ -46,26 +54,26 @@ export default {
       let form = document.querySelector("form");
       let formData = new FormData(form);
 
+      let element = document.getElementById("test");
+      element.classList.add("bgcolor");
+
       fetch("/apiData", {
         body: formData,
-        method: "post"
+        method: "post",
       })
-
-        .then(res => res.json())
-        .then(data => {
-
+        .then((res) => res.json())
+        .then((data) => {
           this.weather.main = data.weather[0].main;
-          this.main.temp = data.main.temp.toFixed(0) + 'C°';
-          this.weather.description = '('+ data.weather[0].description + ')';
+          this.main.temp = data.main.temp.toFixed(0) + "C°";
+          this.weather.description = "(" + data.weather[0].description + ")";
           this.name = data.name;
-
-          this.weather.icon = '<img src="http://openweathermap.org/img/wn/' + data.weather[0].icon + '.png" height="100px" width="100px">';
-
-          console.log()
-        })
-    }
-     
-  }
+          this.weather.icon =
+            '<img src="http://openweathermap.org/img/wn/' +
+            data.weather[0].icon +
+            '.png" height="100px" width="100px">';
+        });
+    },
+  },
 };
 </script>
 
@@ -82,17 +90,30 @@ section {
 
 .meteo {
   position: absolute;
-  top: 55%;
+  top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 40%;
-  height: 10%;
-  font-size: 30px;
-  font-family: 'Roboto', sans-serif;
-  text-align: center;
-  color: aliceblue;
 }
 
+.text {
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+  color: white;
+  font-size: 30px;
+}
+
+.bgcolor {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background-color: #007aac;
+  opacity: 0.5;
+  border-radius: 9px;
+  z-index: -1;
+}
 
 .form {
   position: absolute;
