@@ -16,13 +16,17 @@
           </button>
         </div>
       </form>
+      <div id="mapid"></div>
       <div class="meteo">
-        <div class="text">
-          <p class="ppp">{{ weather.main }} {{ name }}</p>
-          <p v-html="weather.icon"></p>
-          <p>{{ main.temp }} {{ weather.description }}</p>
+        <div id="map"></div>
+        <div class="meteoText">
+          <div class="text">
+            <p>{{ weather.main }} {{ name }}</p>
+            <p v-html="weather.icon"></p>
+            <p>{{ main.temp }} {{ weather.description }}</p>
+          </div>
+          <div id="test"></div>
         </div>
-        <div id="test"></div>
       </div>
     </div>
   </section>
@@ -36,7 +40,11 @@ export default {
       weather: {
         main: "",
         description: "",
-        icon: "",
+        
+      },
+      coord:{
+        lon:"",
+        lat:"",
       },
       main: {
         temp: "",
@@ -67,10 +75,43 @@ export default {
           this.main.temp = data.main.temp.toFixed(0) + "C°";
           this.weather.description = "(" + data.weather[0].description + ")";
           this.name = data.name;
-          this.weather.icon =
-            '<img src="http://openweathermap.org/img/wn/' +
-            data.weather[0].icon +
-            '.png" height="100px" width="100px">';
+          this.weather.icon = '<img src="http://openweathermap.org/img/wn/' +data.weather[0].icon +'.png" height="100px" width="100px">';
+
+          this.coord.lon = data.coord.lon;
+          this.coord.lat = data.coord.lat;
+
+          //console.log(lon);
+
+          var mymap = L.map("mapid").setView([this.coord.lat, this.coord.lon], 8);
+          L.tileLayer(
+            "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaW1vdWxhIiwiYSI6ImNrOTg4ZmFodzAwYWMzbnAyendnZnkyZ2oifQ.ynaflBVc-HcqiGc9hN36fQ",
+            {
+              attribution:
+                'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+              maxZoom: 18,
+              id: "mapbox/streets-v11",
+              tileSize: 512,
+              zoomOffset: -1,
+              accessToken: "your.mapbox.access.token",
+            }
+          ).addTo(mymap);
+          var marker = L.marker([this.coord.lat, this.coord.lon]).addTo(mymap);
+                   
+          function onMapClick(e) {
+            alert("You clicked the map at " + name);
+          }
+
+          mymap.on("click", onMapClick);
+          var popup = L.popup();
+
+          function onMapClick(e) {
+            popup
+              .setLatLng(e.latlng)
+              .setContent("You clicked the map at " + e.latlng.toString())
+              .openOn(mymap);
+          }
+
+          mymap.on("click", onMapClick);
         });
     },
   },
@@ -88,8 +129,41 @@ section {
   background-image: url("../../assets/img/city.jpg");
 }
 
+.mylocation {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translate(-50%, 10%);
+    -webkit-border-radius: 7;
+    -moz-border-radius: 7;
+    border-radius: 7px;
+    font-family: Arial;
+    color: #1f628d;
+    font-size: 30px;
+    background: #ffffff;
+    padding: 10px 20px 10px 20px;
+    border: solid #1f628d 2px;
+    text-decoration: none;
+}
+
+.mylocation:hover {
+    background: #1f628d;
+    text-decoration: none;
+    color: #ffffff;
+    border: none;
+}
+
+#mapid {
+  height:  450px;
+  width: 550px;
+  position: absolute;
+  top: 70%;
+  transform: translate(0%, -50%);
+
+}
 .meteo {
   position: absolute;
+  display: flex;
   top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
