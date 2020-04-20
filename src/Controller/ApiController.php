@@ -35,7 +35,7 @@ class ApiController extends AbstractController
     }
     
     /**
-     * @Route("/test", name="test")
+     * @Route("/", name="test")
      */
     public function test()
     {    
