@@ -162,12 +162,13 @@ section {
 }
 
 #weathermap {
-  height:  500px;
+  height: 500px;
   width: 600px;
   position: absolute;
-  top: 70%;
+  top: 60%;
   left: 30%;
   transform: translate(-50%, -50%);
+  border-radius: 2px;
 
 }
 .meteo {
@@ -200,7 +201,7 @@ section {
 
 .form {
   position: absolute;
-  top: 30%;
+  top: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: #181818;
@@ -214,11 +215,11 @@ form .h2 {
 h1 {
   text-align: center;
   position: absolute;
-  top: 10%;
+  top: 5%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: #ff5e57;
-  font-size: 60px;
+  font-size: 40px;
   font-family: "Roboto", sans-serif;
 }
 </style>
