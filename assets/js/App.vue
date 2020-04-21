@@ -18,14 +18,13 @@
       </form>
       <div id="weathermap"></div>
       <div class="meteo">
-        
         <div class="meteoText">
           <div class="text">
             <p>{{ weather.main }} {{ name }}</p>
             <p v-html="weather.icon"></p>
             <p>{{ main.temp }} {{ weather.description }}</p>
           </div>
-          <div id="test"></div>
+          <div id="click"></div>
         </div>
       </div>
     </div>
@@ -64,15 +63,12 @@ export default {
       let form = document.querySelector("form");
       let formData = new FormData(form);
 
-      let element = document.getElementById("test");
+      let element = document.getElementById("click");
       element.classList.add("bgcolor");
       
      
       if(this.update){
           document.getElementById('weathermap').innerHTML = "<div id='mapid' style='width: 100%; height: 100%;'></div>";
-          console.log(document.getElementById('mapid'))
-          console.log('test');
-          console.log(this.update);
         }
 
       fetch("/apiData", {
@@ -104,18 +100,6 @@ export default {
             }
           ).addTo(map);
           let marker = L.marker([this.coord.lat, this.coord.lon]).addTo(map);
-
-          /*map.on("click", onMapClick);
-          let popup = L.popup();*/
-
-          /*function onMapClick(e) {
-            popup
-              .setLatLng(e.latlng)
-              .setContent("You clicked the map at " + e.latlng.toString())
-              .openOn(map);
-          }*/
-
-          //map.on("click", onMapClick);
           console.log(map);
           this.update = true;
 
@@ -168,13 +152,11 @@ section {
   top: 60%;
   left: 30%;
   transform: translate(-50%, -50%);
-  border-radius: 2px;
-
 }
 .meteo {
   position: absolute;
   display: flex;
-  top: 70%;
+  top: 60%;
   left: 70%;
   transform: translate(-50%, -50%);
 }
@@ -221,5 +203,15 @@ h1 {
   color: #ff5e57;
   font-size: 40px;
   font-family: "Roboto", sans-serif;
+}
+@media screen and (max-width: 1198px){
+#weathermap {
+  top: 70%;
+  left: 50%;
+}
+.meteo {
+  top: 35%;
+  left: 50%;
+}
 }
 </style>
