@@ -16,9 +16,9 @@
           </button>
         </div>
       </form>
-      <div id="mapid"></div>
+      <div id="weathermap"></div>
       <div class="meteo">
-        <div id="map"></div>
+        
         <div class="meteoText">
           <div class="text">
             <p>{{ weather.main }} {{ name }}</p>
@@ -50,6 +50,7 @@ export default {
         temp: "",
       },
       name: "",
+      update:false,
     };
   },
 
@@ -59,11 +60,20 @@ export default {
 
   methods: {
     fetchMeteo() {
+
       let form = document.querySelector("form");
       let formData = new FormData(form);
 
       let element = document.getElementById("test");
       element.classList.add("bgcolor");
+      
+     
+      if(this.update){
+          document.getElementById('weathermap').innerHTML = "<div id='mapid' style='width: 100%; height: 100%;'></div>";
+          console.log(document.getElementById('mapid'))
+          console.log('test');
+          console.log(this.update);
+        }
 
       fetch("/apiData", {
         body: formData,
@@ -76,13 +86,11 @@ export default {
           this.weather.description = "(" + data.weather[0].description + ")";
           this.name = data.name;
           this.weather.icon = '<img src="http://openweathermap.org/img/wn/' +data.weather[0].icon +'.png" height="100px" width="100px">';
-
           this.coord.lon = data.coord.lon;
           this.coord.lat = data.coord.lat;
 
-          //console.log(lon);
-
-          var mymap = L.map("mapid").setView([this.coord.lat, this.coord.lon], 8);
+          document.getElementById('weathermap').innerHTML = "<div id='mapid' style='width: 100%; height: 100%;'></div>";
+          let map = L.map("mapid").setView([this.coord.lat, this.coord.lon], 8);
           L.tileLayer(
             "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaW1vdWxhIiwiYSI6ImNrOTg4ZmFodzAwYWMzbnAyendnZnkyZ2oifQ.ynaflBVc-HcqiGc9hN36fQ",
             {
@@ -94,25 +102,25 @@ export default {
               zoomOffset: -1,
               accessToken: "your.mapbox.access.token",
             }
-          ).addTo(mymap);
-          var marker = L.marker([this.coord.lat, this.coord.lon]).addTo(mymap);
-                   
-          function onMapClick(e) {
-            alert("You clicked the map at " + name);
-          }
+          ).addTo(map);
+          let marker = L.marker([this.coord.lat, this.coord.lon]).addTo(map);
 
-          mymap.on("click", onMapClick);
-          var popup = L.popup();
+          /*map.on("click", onMapClick);
+          let popup = L.popup();*/
 
-          function onMapClick(e) {
+          /*function onMapClick(e) {
             popup
               .setLatLng(e.latlng)
               .setContent("You clicked the map at " + e.latlng.toString())
-              .openOn(mymap);
-          }
+              .openOn(map);
+          }*/
 
-          mymap.on("click", onMapClick);
+          //map.on("click", onMapClick);
+          console.log(map);
+          this.update = true;
+
         });
+      
     },
   },
 };
@@ -153,19 +161,20 @@ section {
     border: none;
 }
 
-#mapid {
-  height:  450px;
-  width: 550px;
+#weathermap {
+  height:  500px;
+  width: 600px;
   position: absolute;
   top: 70%;
-  transform: translate(0%, -50%);
+  left: 30%;
+  transform: translate(-50%, -50%);
 
 }
 .meteo {
   position: absolute;
   display: flex;
   top: 70%;
-  left: 50%;
+  left: 70%;
   transform: translate(-50%, -50%);
 }
 
@@ -191,7 +200,7 @@ section {
 
 .form {
   position: absolute;
-  top: 40%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: #181818;
@@ -205,7 +214,7 @@ form .h2 {
 h1 {
   text-align: center;
   position: absolute;
-  top: 15%;
+  top: 10%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: #ff5e57;
